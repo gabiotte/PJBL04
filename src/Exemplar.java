@@ -17,5 +17,8 @@ public abstract class Exemplar {
     public String getTitulo() {
         return titulo;
     }
+    public LocalDate getDevolucao() {
+        return devolucao;
+    }
     public abstract void setDevolucao();
 }

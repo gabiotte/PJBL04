@@ -5,13 +5,13 @@ public class Livro extends Exemplar {
     private Editora editora;
     private ArrayList<Autor> listaAutores;
     private int temprestimo = 7;
-    public Livro(int classind, String titulo, Editora editora, ArrayList listaAutores, int temprestimo) {
+    public Livro(int classind, String titulo, Editora editora, ArrayList<Autor> listaAutores, int temprestimo) {
         super(classind, titulo);
         this.editora = editora;
         this.listaAutores = listaAutores;
         this.temprestimo = temprestimo;
     }
-    public ArrayList getAutores(){
+    public ArrayList<Autor> getAutores(){
         return listaAutores;
     }
     public Editora getEditora(){
