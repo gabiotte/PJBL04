@@ -29,4 +29,17 @@ public class Cliente {
     public LocalDate getDatanascimento(){
         return datanascimento;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setDatanascimento(LocalDate datanascimento) {
+        this.datanascimento = datanascimento;
+    }
 }

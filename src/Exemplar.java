@@ -4,12 +4,11 @@ import java.time.LocalDate;
 public abstract class Exemplar {
     protected int classind;
     protected String titulo;
-    protected LocalDate devolucao;
-    protected  boolean status;
+    protected LocalDate devolucao = null;
+    protected boolean status = false;
     public Exemplar(int classind, String titulo) {
         this.classind = classind;
         this.titulo = titulo;
-        this.devolucao = null;
     }
     public int getClassind() {
         return classind;
@@ -20,6 +19,18 @@ public abstract class Exemplar {
     public LocalDate getDevolucao() {
         return devolucao;
     }
-    public abstract void setDevolucao();
+    public boolean getStatus() {
+        return status;
+    }
 
+    public void setClassind(int classind) {
+        this.classind = classind;
+    }
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    public abstract void extenderDevolucao();
 }

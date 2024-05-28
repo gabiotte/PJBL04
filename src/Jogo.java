@@ -4,7 +4,7 @@ public class Jogo extends Exemplar {
     private Marca marca;
     private int temprestimo = 5;
 
-    public Jogo(Marca marca, int classind, String titulo, LocalDate devolucao) {
+    public Jogo(Marca marca, int classind, String titulo) {
         super(classind, titulo);
         this.marca = marca;
     }
@@ -15,7 +15,11 @@ public class Jogo extends Exemplar {
     public int getTemprestimo(){
         return temprestimo;
     }
-    public void setDevolucao() {
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+    public void extenderDevolucao() {
         devolucao = LocalDate.now().plusDays(this.temprestimo);
     }
 }
