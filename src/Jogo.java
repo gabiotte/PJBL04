@@ -22,4 +22,9 @@ public class Jogo extends Exemplar {
     public void extenderDevolucao() {
         devolucao = LocalDate.now().plusDays(this.temprestimo);
     }
+    public void emprestar() {
+        super.emprestar();
+        extenderDevolucao();
+    }
+
 }
