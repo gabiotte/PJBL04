@@ -9,11 +9,11 @@ public class Main {
     public static void main(String[] args){
         // componente JFrame
         JFrame meuJFrame = new JFrame("Teste - Java Swing");
-        meuJFrame.setSize(900,900);
+        meuJFrame.setSize(300,300);
 
         // componente JPanel
         JPanel meuJPanel = new JPanel();
-        meuJPanel.setSize(900, 900);
+        meuJPanel.setSize(300, 300);
 
         // usamos este diseño para centrar los componentes de JPanel
         meuJPanel.setLayout(new GridBagLayout());

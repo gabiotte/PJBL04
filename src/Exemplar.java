@@ -1,4 +1,3 @@
-import java.util.Date;
 import java.time.LocalDate;
 
 public abstract class Exemplar {
@@ -33,4 +32,11 @@ public abstract class Exemplar {
         this.status = status;
     }
     public abstract void extenderDevolucao();
+    public void emprestar() {
+        status = true;
+    }
+    public void devolver() {
+        status = false;
+        devolucao = null;
+    }
 }
