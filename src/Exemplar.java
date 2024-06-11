@@ -40,5 +40,5 @@ public abstract class Exemplar {
         devolucao = null;
     }
 
-    public abstract String toString();
+    public abstract String[] toCSV();
 }

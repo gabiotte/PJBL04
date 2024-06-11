@@ -1,11 +1,11 @@
 public class Editora {
     private String nome;
 
-    public String getNome(){
-        return nome;
+    public Editora(String nome) {
+        this.nome = nome;
     }
 
-    public String toString() {
-        return nome;
+    public String[] toCSV() {
+        return new String[]{nome};
     }
 }

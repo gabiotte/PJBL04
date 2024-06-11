@@ -30,4 +30,8 @@ public class Jogo extends Exemplar {
     public String toString() {
         return classind + "," + titulo + "," + devolucao + "," + status + "," + marca + "," + temprestimo;
     }
+
+    public String[] toCSV() {
+        return new String[]{String.valueOf(classind), titulo, devolucao == null ? "" : devolucao.toString(), String.valueOf(status), marca.toString(), String.valueOf(temprestimo)};
+    }
 }

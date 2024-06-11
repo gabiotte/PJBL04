@@ -1,49 +1,41 @@
 import java.time.LocalDate;
 
 public class Cliente {
-    private String nome;
-    private String CPF;
-    private String numero;
+    private String name;
+    private String cpf;
+    private String phone;
     private String email;
-    private LocalDate datanascimento;
+    private LocalDate dob;
 
-    public Cliente(String nome, String CPF, String numero, String email, LocalDate datanascimento) {
-        this.nome = nome;
-        this.CPF = CPF;
-        this.numero = numero;
+    public Cliente(String name, String cpf, String phone, String email, LocalDate dob) {
+        this.name = name;
+        this.cpf = cpf;
+        this.phone = phone;
         this.email = email;
-        this.datanascimento = datanascimento;
+        this.dob = dob;
     }
-    public String getNome(){
-        return nome;
+
+    public String getName() {
+        return name;
     }
-    public String getCPF(){
-        return CPF;
+
+    public String getCpf() {
+        return cpf;
     }
-    public String getNumero(){
-        return numero;
+
+    public String getPhone() {
+        return phone;
     }
-    public String getEmail(){
+
+    public String getEmail() {
         return email;
     }
-    public LocalDate getDatanascimento(){
-        return datanascimento;
+
+    public LocalDate getDob() {
+        return dob;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public void setDatanascimento(LocalDate datanascimento) {
-        this.datanascimento = datanascimento;
-    }
-
-    public String toString() {
-        return nome + "," + CPF + "," + numero + "," + email + "," + datanascimento;
+    public String[] toCSV() {
+        return new String[]{name, cpf, phone, email, dob.toString()};
     }
 }

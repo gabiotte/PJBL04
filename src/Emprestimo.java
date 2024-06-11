@@ -40,8 +40,11 @@ public class Emprestimo {
         }
     }
 
-    public String toString() {
-        return cliente + "," + exemplares + "," + data + "," + multa;
+    public String[] toCSV() {
+        StringBuilder exemplarString = new StringBuilder();
+        for (Exemplar exemplar : exemplares) {
+            exemplarString.append(exemplar.toString()).append(";"); // Concatena os exemplares separados por ponto e vírgula
+        }
+        return new String[]{cliente.toString(), exemplarString.toString(), data.toString(), String.valueOf(multa)};
     }
-
 }

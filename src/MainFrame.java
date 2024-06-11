@@ -1,3 +1,6 @@
+package PJBL04;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,9 +8,12 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+import util.CSVReader;
+
+
 
 public class MainFrame extends JFrame {
 
@@ -17,9 +23,6 @@ public class MainFrame extends JFrame {
     private JTextArea exemplarListArea;
     private List<String> exemplarCodes;
     private String clientCPF, selectedType, title, author, publisher, brand, clientName, clientPhone, clientEmail, clientDob, loanCode;
-
-    ArrayList<Cliente> clientes = CSVReader.readClienteFromCSV("clientes.csv");
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public MainFrame() {
         // Configurações da janela principal
@@ -271,8 +274,6 @@ public class MainFrame extends JFrame {
         JButton confirmButton = new JButton("OK");
         JButton backButton = new JButton("Voltar");
 
-
-
         confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -281,6 +282,7 @@ public class MainFrame extends JFrame {
                 clientPhone = clientPhoneField.getText();
                 clientEmail = clientEmailField.getText();
                 clientDob = clientDobField.getText();
+
                 JOptionPane.showMessageDialog(panel, "Cadastro de cliente realizado com sucesso!");
                 clientCpfField.setText("");
                 clientNameField.setText("");
@@ -289,14 +291,14 @@ public class MainFrame extends JFrame {
                 clientDobField.setText("");
                 cardLayout.show(cardPanel, "Main Menu");
 
+                ArrayList<Cliente> clientes = CSVReader.readClienteFromCSV("arquivos/clientes.csv");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
                 LocalDate clientDobDate = LocalDate.parse(clientDob, formatter);
 
-                clientes.add(new Cliente(clientName,clientCPF,clientPhone,clientEmail,clientDobDate));
-                CSVWriter.writeClientesToCSV("src/clientes.csv",clientes);
+                clientes.add(new Cliente(clientName, clientCPF, clientPhone, clientEmail, clientDobDate));
+                CSVWriter.writeClientesToCSV("arquivos/clientes.csv", clientes);
             }
-
-
-
         });
 
         backButton.addActionListener(new ActionListener() {
@@ -363,7 +365,4 @@ public class MainFrame extends JFrame {
             }
         });
     }
-
-
 }
-
