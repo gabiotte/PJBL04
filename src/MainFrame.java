@@ -2,10 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -18,10 +18,12 @@ public class MainFrame extends JFrame {
     private List<String> exemplarCodes;
     private String clientCPF, selectedType, title, author, publisher, brand, clientName, clientPhone, clientEmail, clientDob, loanCode;
 
-    ArrayList<Cliente> clientes = CSVReader.readClienteFromCSV("clientes.csv");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public MainFrame() {
+
+
+
         // Configurações da janela principal
         setTitle("Menu Principal");
         setSize(500, 400);
@@ -272,7 +274,6 @@ public class MainFrame extends JFrame {
         JButton backButton = new JButton("Voltar");
 
 
-
         confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -281,6 +282,15 @@ public class MainFrame extends JFrame {
                 clientPhone = clientPhoneField.getText();
                 clientEmail = clientEmailField.getText();
                 clientDob = clientDobField.getText();
+
+
+                List<Cliente> clientesCarregados = CSVReader.readClienteFromCSV("clientes.csv");
+
+                Cliente cliente = new Cliente(clientName,clientCPF,clientPhone,clientEmail,LocalDate.parse(clientDob, formatter));
+                clientesCarregados.add(cliente);
+
+                CSVWriter.writeClientesToCSV("clientes.csv",clientesCarregados);
+
                 JOptionPane.showMessageDialog(panel, "Cadastro de cliente realizado com sucesso!");
                 clientCpfField.setText("");
                 clientNameField.setText("");
@@ -289,10 +299,6 @@ public class MainFrame extends JFrame {
                 clientDobField.setText("");
                 cardLayout.show(cardPanel, "Main Menu");
 
-                LocalDate clientDobDate = LocalDate.parse(clientDob, formatter);
-
-                clientes.add(new Cliente(clientName,clientCPF,clientPhone,clientEmail,clientDobDate));
-                CSVWriter.writeClientesToCSV("src/clientes.csv",clientes);
             }
 
 

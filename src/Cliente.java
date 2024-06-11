@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Cliente {
     private String nome;
@@ -44,6 +45,17 @@ public class Cliente {
     }
 
     public String toString() {
-        return nome + "," + CPF + "," + numero + "," + email + "," + datanascimento;
+        return nome + ";" + CPF + ";" + numero + ";" + email + ";" + datanascimento + "\n";
+    }
+    public static Cliente fromString(String str) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String[] parts = str.split(";");
+        return new Cliente(
+                parts[0],
+                parts[1],
+                parts[2],
+                parts[3],
+                LocalDate.parse(parts[4], formatter)
+        );
     }
 }
