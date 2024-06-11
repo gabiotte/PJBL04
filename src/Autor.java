@@ -5,4 +5,7 @@ public class Autor {
     public String getNome(){
         return nome + ' ' + sobrenome;
     }
+    public String toString() {
+        return nome + "," + sobrenome;
+    }
 }

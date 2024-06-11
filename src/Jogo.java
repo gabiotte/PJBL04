@@ -27,4 +27,7 @@ public class Jogo extends Exemplar {
         extenderDevolucao();
     }
 
+    public String toString() {
+        return classind + "," + titulo + "," + devolucao + "," + status + "," + marca + "," + temprestimo;
+    }
 }

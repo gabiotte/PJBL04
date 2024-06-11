@@ -42,4 +42,8 @@ public class Cliente {
     public void setDatanascimento(LocalDate datanascimento) {
         this.datanascimento = datanascimento;
     }
+
+    public String toString() {
+        return nome + "," + CPF + "," + numero + "," + email + "," + datanascimento;
+    }
 }

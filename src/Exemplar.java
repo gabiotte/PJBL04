@@ -39,4 +39,6 @@ public abstract class Exemplar {
         status = false;
         devolucao = null;
     }
+
+    public abstract String toString();
 }

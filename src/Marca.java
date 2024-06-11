@@ -4,4 +4,8 @@ public class Marca {
         return nome;
     }
 
+    public String toString() {
+        return nome;
+    }
+
 }

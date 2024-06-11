@@ -33,4 +33,8 @@ public class Livro extends Exemplar {
         super.emprestar();
         extenderDevolucao();
     }
+
+    public String toString() {
+        return classind + "," + titulo + "," + devolucao + "," + status + "," + editora + "," + listaAutores + "," + temprestimo;
+    }
 }

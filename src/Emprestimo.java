@@ -40,4 +40,8 @@ public class Emprestimo {
         }
     }
 
+    public String toString() {
+        return cliente + "," + exemplares + "," + data + "," + multa;
+    }
+
 }

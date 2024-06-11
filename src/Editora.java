@@ -4,4 +4,8 @@ public class Editora {
     public String getNome(){
         return nome;
     }
+
+    public String toString() {
+        return nome;
+    }
 }
