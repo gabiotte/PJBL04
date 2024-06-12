@@ -143,7 +143,6 @@ public class CSVReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TESTE
         return livros;
     }
 

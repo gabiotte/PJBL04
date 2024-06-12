@@ -116,6 +116,7 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String code = exemplarField.getText();
+
                 if (!code.isEmpty()) {
                     exemplarCodes.add(code);
                     exemplarListArea.append(code + "\n");
@@ -138,15 +139,19 @@ public class MainFrame extends JFrame {
                     for (Exemplar livro : livros) {
                         Long cod = livro.getCodigo();
                         if (cod == Long.parseLong(codExemplar)) {
-                            livro.emprestar();
-                            exemplares.add(livro);
+                            if (!livro.getStatus()) {
+                                livro.emprestar();
+                                exemplares.add(livro);
+                            }
                         }
                     }
                     for(Exemplar jogo : jogos) {
                         Long cod = jogo.getCodigo();
                         if (cod == Long.parseLong(codExemplar)) {
-                            jogo.emprestar();
-                            exemplares.add(jogo);
+                            if (!jogo.getStatus()) {
+                                jogo.emprestar();
+                                exemplares.add(jogo);
+                            }
                         }
                     }
                 }
