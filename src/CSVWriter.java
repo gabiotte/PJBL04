@@ -52,10 +52,10 @@ public class CSVWriter {
         }
     }
 
-    public static void writeJogosToCSV(String filePath, ArrayList<Jogo> jogos) {
+    public static void writeJogosToCSV(String filePath, ArrayList<Exemplar> jogos) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            bw.write("Marca,ClassInd,Título\n");
-            for (Jogo jogo : jogos) {
+            bw.write("Código,ClassInd,Título,Devolução,Status,Marca,Tempo de Empréstimo\n");
+            for (Exemplar jogo : jogos) {
                 bw.write(String.join(",", jogo.toCSV()));
                 bw.newLine();
             }
@@ -64,10 +64,10 @@ public class CSVWriter {
         }
     }
 
-    public static void writeLivrosToCSV(String filePath, ArrayList<Livro> livros) {
+    public static void writeLivrosToCSV(String filePath, ArrayList<Exemplar> livros) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            bw.write("ClassInd,Título,Editora,Autor\n");
-            for (Livro livro : livros) {
+            bw.write("Código,Classificação,Título,Devolução,Status,Editora,Autor,Tempo de Empréstimo\n");
+            for (Exemplar livro : livros) {
                 bw.write(String.join(",", livro.toCSV()));
                 bw.newLine();
             }

@@ -43,135 +43,135 @@ public class CSVReader {
 
         return autores;
     }
-}
 
-public static ArrayList<Emprestimo> readEmprestimoFromCSV(String filePath) {
-    ArrayList<Emprestimo> emprestimos = new ArrayList<>();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-        String line;
-        br.readLine();  // Ignora o cabeçalho
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(";");
+    public static ArrayList<Emprestimo> readEmprestimoFromCSV(String filePath) {
+        ArrayList<Emprestimo> emprestimos = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-            String[] listCliente = values[0].split(";");
-            Cliente cliente = new Cliente(listCliente[0],listCliente[1],listCliente[2],listCliente[3],LocalDate.parse(listCliente[4], formatter));
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            br.readLine();  // Ignora o cabeçalho
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(";");
 
-            String[] listExemplares = values[1].split(";");
-            ArrayList<Exemplar> exemplares = new ArrayList<>();
-            // listExemplar[0] - primeiro exemplar
-            for (String value : listExemplares) {
-                String[] listParam = line.split(";");
-                if (listParam.length == 3) {
-                    // Jogo
-                    Marca marca = new Marca(listParam[0]);
-                    Exemplar exemplar = new Jogo(marca, Integer.parseInt(listParam[1]), listParam[2]);
-                    exemplares.add(exemplar);
+                String[] listCliente = values[0].split(";");
+                Cliente cliente = new Cliente(listCliente[0], listCliente[1], listCliente[2], listCliente[3], LocalDate.parse(listCliente[4], formatter));
+
+                String[] listExemplares = values[1].split(";");
+                ArrayList<Exemplar> exemplares = new ArrayList<>();
+                // listExemplar[0] - primeiro exemplar
+                for (String value : listExemplares) {
+                    String[] listParam = line.split(";");
+                    if (listParam.length == 4) {
+                        // Jogo
+                        Marca marca = new Marca(listParam[0]);
+                        Exemplar exemplar = new Jogo(marca, Integer.parseInt(listParam[1]), listParam[2], Long.parseLong(listParam[3]));
+                        exemplares.add(exemplar);
+                    } else {
+                        // Livro
+                        Autor autor = new Autor(listParam[3]);
+                        Editora editora = new Editora(listParam[2]);
+                        Exemplar exemplar = new Livro(Integer.parseInt(listParam[0]), listParam[1], editora, autor, Long.parseLong(listParam[4]));
+                        exemplares.add(exemplar);
+                    }
+                    Emprestimo emprestimo = new Emprestimo(cliente, exemplares);
+                    emprestimos.add(emprestimo);
                 }
-                else {
-                    // Livro
-                    Autor autor = new Autor(listParam[3]);
-                    Editora editora = new Editora(listParam[2]);
-                    Exemplar exemplar = new Livro(Integer.parseInt(listParam[0]),listParam[1],editora,autor);
-                    exemplares.add(exemplar);
-                }
-                Emprestimo emprestimo = new Emprestimo(cliente, exemplares);
-                emprestimos.add(emprestimo);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+
+        return emprestimos;
     }
 
-    return emprestimos;
-}
+    public static ArrayList<Editora> readEditoraFromCSV(String filePath) {
+        ArrayList<Editora> editoras = new ArrayList<>();
 
-public static ArrayList<Editora> readEditoraFromCSV(String filePath) {
-    ArrayList<Editora> editoras = new ArrayList<>();
-
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-        String line;
-        br.readLine();  // Ignora o cabeçalho
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(",");
-            Editora editora = new Editora(values[0]);
-            editoras.add(editora);
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            br.readLine();  // Ignora o cabeçalho
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                Editora editora = new Editora(values[0]);
+                editoras.add(editora);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+
+        return editoras;
     }
 
-    return editoras;
-}
+    public static ArrayList<Marca> readMarcaFromCSV(String filePath) {
+        ArrayList<Marca> marcas = new ArrayList<>();
 
-public static ArrayList<Marca> readMarcaFromCSV(String filePath) {
-    ArrayList<Marca> marcas = new ArrayList<>();
-
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-        String line;
-        br.readLine();  // Ignora o cabeçalho
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(",");
-            Marca marca = new Marca(values[0]);
-            marcas.add(marca);
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            br.readLine();  // Ignora o cabeçalho
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                Marca marca = new Marca(values[0]);
+                marcas.add(marca);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+
+        return marcas;
     }
 
-    return marcas;
-}
+    public static ArrayList<Exemplar> readLivroFromCSV(String filePath) {
+        ArrayList<Exemplar> livros = new ArrayList<>();
 
-public static ArrayList<Livro> readLivroFromCSV(String filePath) {
-    ArrayList<Livro> livros = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            br.readLine();  // Ignora o cabeçalho
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
 
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-        String line;
-        br.readLine();  // Ignora o cabeçalho
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(";");
+                // String[] listEditora = values[2].split(";");
+                Editora editora = new Editora(values[2]);
 
-            String[] listEditora = values[2].split(";");
-            Editora editora = new Editora(listEditora[0]);
+                // String[] listAutor = values[3].split((";"));
+                Autor autor = new Autor(values[3]);
 
-            String[] listAutor = values[3].split((";"));
-            Autor autor = new Autor(listAutor[0]);
-
-            Livro livro = new Livro(Integer.parseInt(values[0]),values[1],editora,autor);
-            livros.add(livro);
+                Exemplar livro = new Livro(Integer.parseInt(values[0]), values[1], editora, autor,Long.parseLong(values[4]));
+                livros.add(livro);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+
+        return livros;
     }
 
-    return livros;
-}
+    public static ArrayList<Exemplar> readJogoFromCSV(String filePath) {
+        ArrayList<Exemplar> jogos = new ArrayList<>();
 
-public static ArrayList<Jogo> readJogoFromCSV(String filePath) {
-    ArrayList<Jogo> jogos = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            br.readLine();  // Ignora o cabeçalho
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
 
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-        String line;
-        br.readLine();  // Ignora o cabeçalho
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(";");
+                //String[] listMarca = values[0].split(";");
+                Marca marca = new Marca(values[0]);
 
-            String[] listMarca = values[0].split(";");
-            Marca marca = new Marca(listMarca[0]);
-
-            Jogo jogo = new Jogo(marca,Integer.parseInt(values[1]),values[2]);
-            jogos.add(jogo);
+                Exemplar jogo = new Jogo(marca, Integer.parseInt(values[1]), values[2],Long.parseLong(values[3]));
+                jogos.add(jogo);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
+
+        return jogos;
     }
-
-    return jogos;
 }
 
-public void main() {
-}
+
+
 
 
 

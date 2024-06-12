@@ -1,6 +1,3 @@
-package PJBL04;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,20 +6,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
-
-import util.CSVReader;
-
-
 
 public class MainFrame extends JFrame {
 
     private CardLayout cardLayout;
     private JPanel cardPanel;
-    private JTextField cpfField, exemplarField, titleField, authorField, publisherField, brandField, clientCpfField, clientNameField, clientPhoneField, clientEmailField, clientDobField, loanCodeField;
+    private JTextField cpfField, exemplarField, titleField, classField, authorField, publisherField, brandField, clientCpfField, clientNameField, clientPhoneField, clientEmailField, clientDobField, loanCodeField;
     private JTextArea exemplarListArea;
     private List<String> exemplarCodes;
-    private String clientCPF, selectedType, title, author, publisher, brand, clientName, clientPhone, clientEmail, clientDob, loanCode;
+    private String clientCPF, selectedType, title, classind, author, publisher, brand, clientName, clientPhone, clientEmail, clientDob, loanCode;
 
     public MainFrame() {
         // Configurações da janela principal
@@ -134,6 +128,36 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clientCPF = cpfField.getText();
+
+                ArrayList<Emprestimo> emprestimos = CSVReader.readEmprestimoFromCSV("emprestimos.csv");
+                ArrayList<Exemplar> exemplares = new ArrayList<>();
+                ArrayList<Exemplar> livros = CSVReader.readLivroFromCSV("livros.csv");
+                ArrayList<Exemplar> jogos = CSVReader.readJogoFromCSV("jogos.csv");
+
+                for (String codExemplar : exemplarCodes) {
+                    for (Exemplar livro : livros) {
+                        Long cod = livro.getCodigo();
+                        if (cod == Long.parseLong(codExemplar)) {
+                            livro.emprestar();
+                            exemplares.add(livro);
+                        }
+                    }
+                    for(Exemplar jogo : jogos) {
+                        Long cod = jogo.getCodigo();
+                        if (cod == Long.parseLong(codExemplar)) {
+                            jogo.emprestar();
+                            exemplares.add(jogo);
+                        }
+                    }
+                }
+
+                ArrayList<Cliente> clientes = CSVReader.readClienteFromCSV("cliente.csv");
+                for (Cliente cliente : clientes) {
+                    if (Objects.equals(clientCPF, cliente.getCpf())) {
+                        Emprestimo emprestimo = new Emprestimo(cliente,exemplares);
+                    }
+                }
+
                 JOptionPane.showMessageDialog(panel, "Empréstimo registrado com sucesso!");
                 cpfField.setText("");
                 exemplarField.setText("");
@@ -174,6 +198,9 @@ public class MainFrame extends JFrame {
         JLabel titleLabel = new JLabel("Título:");
         titleField = new JTextField(15);
 
+        JLabel classLabel = new JLabel("Classificação Indicativa:");
+        classField = new JTextField(15);
+
         JLabel authorLabel = new JLabel("Autor:");
         authorField = new JTextField(15);
         authorField.setEnabled(false);
@@ -213,15 +240,33 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 title = titleField.getText();
+                classind = classField.getText();
+
+                Long code = new Random().nextLong(10000) + 1;
                 if (selectedType.equals("Livro")) {
                     author = authorField.getText();
                     publisher = publisherField.getText();
+
+                    ArrayList<Exemplar> livros = CSVReader.readLivroFromCSV("livros.csv");
+                    Editora editora = new Editora(publisher);
+                    Autor autor = new Autor(author);
+                    Exemplar livro = new Livro(Integer.parseInt(classind),title,editora,autor,code);
+                    livros.add(livro);
+                    CSVWriter.writeLivrosToCSV("livros.csv", livros);
+
                 } else if (selectedType.equals("Jogo")) {
                     brand = brandField.getText();
+
+                    ArrayList<Exemplar> jogos = CSVReader.readJogoFromCSV("jogos.csv");
+                    Marca marca = new Marca(brand);
+                    Exemplar jogo = new Jogo(marca,Integer.parseInt(classind),title,code);
+                    jogos.add(jogo);
+                    CSVWriter.writeJogosToCSV("jogos.csv", jogos);
+
                 }
-                int code = new Random().nextInt(10000) + 1;
                 JOptionPane.showMessageDialog(panel, "Cadastro realizado!\nCódigo: " + code);
                 titleField.setText("");
+                classField.setText("");
                 authorField.setText("");
                 publisherField.setText("");
                 brandField.setText("");
@@ -240,6 +285,8 @@ public class MainFrame extends JFrame {
         panel.add(gameRadioButton);
         panel.add(titleLabel);
         panel.add(titleField);
+        panel.add(classLabel);
+        panel.add(classField);
         panel.add(authorLabel);
         panel.add(authorField);
         panel.add(publisherLabel);
@@ -291,13 +338,13 @@ public class MainFrame extends JFrame {
                 clientDobField.setText("");
                 cardLayout.show(cardPanel, "Main Menu");
 
-                ArrayList<Cliente> clientes = CSVReader.readClienteFromCSV("arquivos/clientes.csv");
+                ArrayList<Cliente> clientes = CSVReader.readClienteFromCSV("clientes.csv");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
                 LocalDate clientDobDate = LocalDate.parse(clientDob, formatter);
 
                 clientes.add(new Cliente(clientName, clientCPF, clientPhone, clientEmail, clientDobDate));
-                CSVWriter.writeClientesToCSV("arquivos/clientes.csv", clientes);
+                CSVWriter.writeClientesToCSV("clientes.csv", clientes);
             }
         });
 

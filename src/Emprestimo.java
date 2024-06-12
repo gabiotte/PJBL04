@@ -47,4 +47,6 @@ public class Emprestimo {
         }
         return new String[]{cliente.toString(), exemplarString.toString(), data.toString(), String.valueOf(multa)};
     }
+
+
 }

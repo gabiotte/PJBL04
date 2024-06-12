@@ -4,8 +4,8 @@ public class Jogo extends Exemplar {
     private Marca marca;
     private int temprestimo = 5;
 
-    public Jogo(Marca marca, int classind, String titulo) {
-        super(classind, titulo);
+    public Jogo(Marca marca, int classind, String titulo, Long codigo) {
+        super(codigo,classind, titulo);
         this.marca = marca;
     }
 
@@ -27,11 +27,7 @@ public class Jogo extends Exemplar {
         extenderDevolucao();
     }
 
-    public String toString() {
-        return classind + "," + titulo + "," + devolucao + "," + status + "," + marca + "," + temprestimo;
-    }
-
     public String[] toCSV() {
-        return new String[]{String.valueOf(classind), titulo, devolucao == null ? "" : devolucao.toString(), String.valueOf(status), marca.toString(), String.valueOf(temprestimo)};
+        return new String[]{String.valueOf(codigo), String.valueOf(classind), titulo, devolucao == null ? "" : devolucao.toString(), String.valueOf(status), marca.toString(), String.valueOf(temprestimo)};
     }
 }

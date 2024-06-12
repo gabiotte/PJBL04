@@ -1,14 +1,18 @@
 import java.time.LocalDate;
 
 public abstract class Exemplar {
+    protected long codigo;
     protected int classind;
     protected String titulo;
     protected LocalDate devolucao = null;
     protected boolean status = false;
-    public Exemplar(int classind, String titulo) {
+    public Exemplar(long codigo, int classind, String titulo) {
+        this.codigo = codigo;
         this.classind = classind;
         this.titulo = titulo;
     }
+
+    public long getCodigo() { return codigo; }
     public int getClassind() {
         return classind;
     }
@@ -34,6 +38,7 @@ public abstract class Exemplar {
     public abstract void extenderDevolucao();
     public void emprestar() {
         status = true;
+        devolucao = LocalDate.now();
     }
     public void devolver() {
         status = false;
